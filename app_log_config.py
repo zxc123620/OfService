@@ -59,7 +59,7 @@ LOGGING_CONFIG = {
 
     # 根日志器配置
     "root": {
-        "level": "DEBUG",
+        "level": "INFO",
         "handlers": ["console", "file"]
     }
 }
