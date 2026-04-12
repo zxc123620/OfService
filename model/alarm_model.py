@@ -21,4 +21,7 @@ class AlarmModel(BaseModel):
 
     def get_status(self):
         statue_data = [0, "开始", "进行中", "结束"]
-        return statue_data[self.alarmStatus]
+        if 0 <= self.alarmStatus <= 3:
+            return statue_data[self.alarmStatus]
+        else:
+            return self.alarmStatus
