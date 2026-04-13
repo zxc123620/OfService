@@ -53,7 +53,7 @@ async def alarm(alarm_model: AlarmModel, request: Request):
             of_alarm.server_recv = 1
             alarm_image =re.findall(r"/(event.*\.(?:jpg|png))$",alarm_model.alarmImage)
             of_alarm.alarm_image = alarm_image[0] if alarm_image else None
-            logging.info("将报警消息置为已收到并存储报警图片地址")
+            logging.info(f"将报警消息{alarm_model.alarmEventId} - {alarm_model.alarmId} 置为已收到并存储报警图片地址")
             await session.commit()
         else:
             logging.info("没在数据库中找到报警")
@@ -105,7 +105,7 @@ async def upload_file(request: Request, file: UploadFile = File(...), company: s
     async with get_db() as session:
         alarm_sql_model = await session.scalar(select)
         if alarm_sql_model:
-            logging.info("将报警图片设置为已收到")
+            logging.info(f"将报警图片{file.filename}设置为已收到")
             alarm_sql_model.image_recv = 1
             alarm_sql_model.image_recv_time = datetime.datetime.now()
             await session.commit()
